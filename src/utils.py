@@ -84,6 +84,9 @@ def load_data(glob_pattern, embeddings_type, sample=None, top=False, percentage=
                 random.seed(1995)
                 count = int(len(sents) / sample)
                 print(count)
+                if count == 0:
+                    print(len(sents))
+                    print(sample)
                 selection = random.sample(list(zip(sents, embs, lbs)), count)
             elif len(sents) < sample:
                 selection = list(zip(sents, embs, lbs))
