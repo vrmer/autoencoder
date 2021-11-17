@@ -40,6 +40,9 @@ def main(config):
     history = autoencoder.train(train_embs, dev_embs, epochs=int(config['epochs']),
                                 batch_size=int(config['batch_size']))
 
+    del train_sents
+    del train_embs
+
     # plot training and validation loss
     plot_history(history, 'loss', f'{exp_name}', config['plots_dir'])
     # plot training and validation accuracy
