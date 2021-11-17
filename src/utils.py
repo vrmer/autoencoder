@@ -83,6 +83,7 @@ def load_data(glob_pattern, embeddings_type, sample=None, top=False, percentage=
                 # fix random seed so that the same items are picked every time
                 random.seed(1995)
                 count = int(len(sents) / sample)
+                print(count)
                 selection = random.sample(list(zip(sents, embs, lbs)), count)
             elif len(sents) < sample:
                 selection = list(zip(sents, embs, lbs))
