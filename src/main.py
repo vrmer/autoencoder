@@ -1,5 +1,7 @@
+import json
 import configparser
 import tensorflow as tf
+from statistics import mean
 from utils import load_data_outer, load_lists, plot_history, compare_embeddings
 from dimensionality_reduction.autoencoder import AutoEncoder
 
@@ -49,14 +51,18 @@ def main(config):
     # cast tensor to float16
     reconstructed_dev_embs = tf.cast(reconstructed_dev_embs, tf.float16)
 
-    average_cosine_similarity = compare_embeddings(dev_embs, reconstructed_dev_embs)
+    cosine_similarities = compare_embeddings(dev_embs, reconstructed_dev_embs)
+    average_cosine_similarity = mean(cosine_similarities)
 
-    # try:
+    output_dict = dict()
+
+    output_dict['sentences'] = dev_sents
+    output_dict['cosine_similarities'] = cosine_similarities
+
     with open(f'{config["results_dir"]}/log.txt', 'a') as outfile:
         outfile.write(f'exp name: {exp_name} ---- avg cosine similarity: {round(average_cosine_similarity, 2)}\n')
-    # except:
-    #     with open(f'{config["results_dir"]}/log.txt', 'w') as outfile:
-    #         outfile.write(f'exp name: {exp_name} ---- avg cosine similarity: {round(average_cosine_similarity, 2)}')
+    with open(f"{config['results_dir']}/{exp_name}_sentences.txt", 'w') as outfile:
+        json.dump(output_dict, outfile)
 
     print()
     print(average_cosine_similarity)

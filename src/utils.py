@@ -1,9 +1,8 @@
 import random
 import glob
 import tqdm
-# import pickle5 as pickle
-import pickle
-from statistics import mean
+import pickle5 as pickle
+# import pickle
 import os
 import numpy as np
 import tensorflow as tf
@@ -30,7 +29,7 @@ def compare_embeddings(original_embeddings, reconstructed_embeddings):
 
             pbar.update(1)
 
-    return mean(similarities)
+    return similarities
 
 
 def load_lists(config_line, symbol_to_split=','):
