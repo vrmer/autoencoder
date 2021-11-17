@@ -43,6 +43,8 @@ def main(config):
     del train_sents
     del train_embs
 
+    print('Autoencoder training completed...')
+
     # plot training and validation loss
     plot_history(history, 'loss', f'{exp_name}', config['plots_dir'])
     # plot training and validation accuracy
@@ -50,6 +52,8 @@ def main(config):
 
     # reconstruct development embeddings
     reconstructed_dev_embs = autoencoder.full_model.predict(dev_embs)
+
+    print('Reconstructed embeddings created...')
 
     # cast tensor to float16
     reconstructed_dev_embs = tf.cast(reconstructed_dev_embs, tf.float16)
